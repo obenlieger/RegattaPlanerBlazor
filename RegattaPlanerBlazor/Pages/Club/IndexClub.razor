@@ -1,0 +1,47 @@
+﻿@page "/clubs"
+@inherits OwningComponentBase<ClubService>
+
+<h3>Vereine</h3>
+<AuthorizeView>
+    <Authorized>
+        <div class="form-group">
+            <a class="btn btn-info" href="club/create">Neuer Verein</a>
+        </div>
+
+        <GenericList List="Clubs">
+            <WholeListTemplate>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Clubs)
+                        {
+                            <tr>
+                                <td>
+                                    <a class="btn btn-success" href="/genre/edit/@item.ClubId">Edit</a>
+                                </td>
+                                <td>@item.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </WholeListTemplate>
+        </GenericList>
+    </Authorized>
+    <NotAuthorized>
+        Du bist nicht berechtigt
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    List<Club> Clubs;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Clubs = await @Service.GetAllClubs();
+    }
+}

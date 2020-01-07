@@ -1,0 +1,36 @@
+﻿@page "/"
+@inherits OwningComponentBase<RegattaService>
+
+<h1>Regatta Planer</h1>
+
+<AuthorizeView>
+    <Authorized>
+        @if (regattaExist == false)
+        {
+            <text>Bitte erstelle eine Regatta und gebe sie zur Meldung frei.</text>
+        }
+        else
+        {
+            <text>Es existiert eine Regatta.</text>
+        }
+    </Authorized>
+    <NotAuthorized>
+        @if (regattaExist == false)
+        {
+            <text>Derzeit sind keine Regatten zur Meldung freigegeben.</text>
+        }
+        else
+        {
+            <text>Folgende Regatten sind freigegeben....</text>
+        }
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    bool regattaExist = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        regattaExist = await @Service.GetAnyRegatta();
+    }
+}
