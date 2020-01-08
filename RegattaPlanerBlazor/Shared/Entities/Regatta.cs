@@ -53,6 +53,7 @@ namespace RegattaPlanerBlazor.Shared.Entities
         public string Catering { get; set; }
         public string Organizer { get; set; }
         public int StartersLastYear { get; set; }
+        public string State { get; set; }
         public int ClubId { get; set; }
         [Display(Name = "Verein")]
         public Club Club { get; set; }

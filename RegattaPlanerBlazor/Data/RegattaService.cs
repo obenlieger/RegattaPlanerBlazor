@@ -25,5 +25,33 @@ namespace RegattaPlanerBlazor.Data
         {
             return await _context.Regattas.ToListAsync();
         }
+
+        public async Task<Regatta> GetRegatta(int id)
+        {
+            return await _context.Regattas.FirstOrDefaultAsync(x => x.RegattaId == id);
+        }
+
+        public async Task<int> CreateRegatta(Regatta regatta)
+        {
+            _context.Regattas.Add(regatta);
+            await _context.SaveChangesAsync();
+            return regatta.RegattaId;
+        }
+
+        public async Task<bool> DeleteRegatta(int regattaId)
+        {
+            var regattaDB = await _context.Regattas.FirstOrDefaultAsync(x => x.RegattaId == regattaId);
+
+            if (regattaDB == null)
+            {
+                return false;
+            }
+
+            _context.Regattas.Remove(regattaDB);
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

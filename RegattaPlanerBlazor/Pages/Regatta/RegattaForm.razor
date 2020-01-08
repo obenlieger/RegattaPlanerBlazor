@@ -1,0 +1,31 @@
+﻿<EditForm Model="Regatta" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Name" />
+            <ValidationMessage For="@(() => Regatta.Name)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Organizer</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Organizer" />
+            <ValidationMessage For="@(() => Regatta.Organizer)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Organizer</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Organizer" />
+            <ValidationMessage For="@(() => Regatta.Organizer)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Speichern</button>
+</EditForm>
+
+@code {
+    [Parameter] public Regatta Regatta { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

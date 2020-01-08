@@ -1,0 +1,68 @@
+﻿@page "/regattas"
+@inherits OwningComponentBase<RegattaService>
+
+<h3>Vereine</h3>
+<AuthorizeView>
+    <Authorized>
+        <div class="form-group">
+            <a class="btn btn-info" href="regatta/create">Neue Regatta</a>
+        </div>
+
+        <GenericList List="Regattas">
+            <WholeListTemplate>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Veranstalter</th>
+                            <th>Von</th>
+                            <th>Bis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Regattas)
+                        {
+                            <tr>
+                                <td>
+                                    <a class="btn btn-success" href="/regatta/edit/@item.RegattaId">Bearbeiten</a>
+                                    <button class="btn btn-danger" @onclick="@(() => DeleteRegatta(item.RegattaId))">Löschen</button>
+                                </td>
+                                <td>@item.Name</td>
+                                <td>@item.Organizer</td>
+                                <td>@item.FromDate</td>
+                                <td>@item.ToDate</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </WholeListTemplate>
+        </GenericList>
+    </Authorized>
+    <NotAuthorized>
+        Du bist nicht berechtigt
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+    List<Regatta> Regattas;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Regattas = await @Service.GetAllRegattas();
+    }
+
+    private async Task LoadRegattas()
+    {
+        Regattas = await @Service.GetAllRegattas();
+    }
+
+    private async Task DeleteRegatta(int id)
+    {
+        bool result = false;
+
+        result = await @Service.DeleteRegatta(id);
+
+        await LoadRegattas();
+    }
+}
