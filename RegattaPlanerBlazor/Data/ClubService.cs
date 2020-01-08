@@ -20,5 +20,49 @@ namespace RegattaPlanerBlazor.Data
         {
             return await _context.Clubs.ToListAsync();
         }
+
+        public async Task<Club> GetClub(int id)
+        {
+            return await _context.Clubs.FirstOrDefaultAsync(x => x.ClubId == id);
+        }
+
+        public async Task<bool> UpdateClub(Club club)
+        {
+            var clubDB = await _context.Clubs.FirstOrDefaultAsync(x => x.ClubId == club.ClubId);
+
+            if(clubDB == null)
+            {
+                return false;
+            }
+
+            _context.Clubs.Update(club);
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<int> CreateClub(Club club)
+        {
+            _context.Clubs.Add(club);
+            await _context.SaveChangesAsync();
+            return club.ClubId;
+        }
+
+        public async Task<bool> DeleteClub(int clubID)
+        {
+            var clubDB = await _context.Clubs.FirstOrDefaultAsync(x => x.ClubId == clubID);
+
+            if (clubDB == null)
+            {
+                return false;
+            }
+
+            _context.Clubs.Remove(clubDB);
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

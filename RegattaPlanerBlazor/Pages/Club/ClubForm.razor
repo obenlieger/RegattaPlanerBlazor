@@ -1,0 +1,45 @@
+﻿<EditForm Model="Club" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="name">Name</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Club.Name" />
+            <ValidationMessage For="@(() => Club.Name)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="name">Stadt</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Club.City" />
+            <ValidationMessage For="@(() => Club.City)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="name">VNr</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Club.VNr" />
+            <ValidationMessage For="@(() => Club.VNr)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="name">Kurzname</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Club.ShortName" />
+            <ValidationMessage For="@(() => Club.ShortName)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="name">E-Mail</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Club.EMail" />
+            <ValidationMessage For="@(() => Club.EMail)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    [Parameter] public Club Club { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

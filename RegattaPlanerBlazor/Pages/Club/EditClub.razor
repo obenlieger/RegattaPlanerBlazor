@@ -1,0 +1,28 @@
+﻿@page "/club/edit/{ClubId:int}"
+@inherits OwningComponentBase<ClubService>
+@inject NavigationManager navigationManager
+
+<h3>Verein bearbeiten</h3>
+
+@if(Club != null)
+{
+    <ClubForm Club="Club" OnValidSubmit="Edit"/>
+}
+
+@code {
+    [Parameter] public int ClubId { get; set; }
+
+    Club Club;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Club = await @Service.GetClub(ClubId);
+    }
+
+    private async Task Edit()
+    {
+        bool result = false;
+        result = await @Service.UpdateClub(Club);
+        navigationManager.NavigateTo("clubs");
+    }
+}

@@ -15,6 +15,9 @@
                         <tr>
                             <th></th>
                             <th>Name</th>
+                            <th>Kurzname</th>
+                            <th>Stadt</th>
+                            <th>E-Mail</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,9 +25,13 @@
                         {
                             <tr>
                                 <td>
-                                    <a class="btn btn-success" href="/genre/edit/@item.ClubId">Edit</a>
+                                    <a class="btn btn-success" href="/club/edit/@item.ClubId">Bearbeiten</a>
+                                    <button class="btn btn-danger" @onclick="@(() => DeleteClub(item.ClubId))">Löschen</button>
                                 </td>
                                 <td>@item.Name</td>
+                                <td>@item.ShortName</td>
+                                <td>@item.City</td>
+                                <td>@item.EMail</td>
                             </tr>
                         }
                     </tbody>
@@ -43,5 +50,19 @@
     protected override async Task OnInitializedAsync()
     {
         Clubs = await @Service.GetAllClubs();
+    }
+
+    private async Task LoadClubs()
+    {
+        Clubs = await @Service.GetAllClubs();
+    }
+
+    private async Task DeleteClub(int id)
+    {
+        bool result = false;
+
+        result = await @Service.DeleteClub(id);
+
+        await LoadClubs();
     }
 }

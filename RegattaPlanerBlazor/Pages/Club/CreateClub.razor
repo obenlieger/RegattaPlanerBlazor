@@ -1,0 +1,25 @@
+﻿@page "/club/create"
+@inherits OwningComponentBase<ClubService>
+@inject NavigationManager navigationManager
+
+<h3>Erstelle Verein</h3>
+
+<ClubForm Club="Club" OnValidSubmit="Create"/>
+
+@code {
+    Club Club = new Club();
+    int clubId = 0;
+
+    private async Task Create()
+    {
+        try
+        {
+            clubId = await @Service.CreateClub(Club);
+            navigationManager.NavigateTo("clubs");
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
