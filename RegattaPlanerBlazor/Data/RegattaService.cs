@@ -53,5 +53,10 @@ namespace RegattaPlanerBlazor.Data
 
             return true;
         }
+
+        public async Task<List<Water>> GetAllWaters()
+        {
+            return await _context.Waters.ToListAsync();
+        }
     }
 }

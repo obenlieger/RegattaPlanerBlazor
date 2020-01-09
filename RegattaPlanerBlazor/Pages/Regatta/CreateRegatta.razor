@@ -2,16 +2,17 @@
 @inject NavigationManager navigationManager
 @inherits OwningComponentBase
 
-<h3>Create Regatta</h3>
+<h3>Neue Regatta</h3>
 
-@if(NotSelectedClubs != null)
+@if(Clubs != null)
 {
-    <RegattaForm Regatta="Regatta" OnValidSubmit="SaveRegatta" NotSelectedClubs="NotSelectedClubs" />
+    <RegattaForm Regatta="Regatta" OnValidSubmit="SaveRegatta" Clubs="Clubs" Waters="Waters" />
 }
 
 @code {
     private Regatta Regatta = new Regatta();
-    private List<Club> NotSelectedClubs;
+    private List<Club> Clubs;
+    private List<Water> Waters;
     ClubService _clubService;
     RegattaService _regattaService;
 
@@ -20,7 +21,8 @@
         _clubService = (ClubService)ScopedServices.GetService(typeof(ClubService));
         _regattaService = (RegattaService)ScopedServices.GetService(typeof(RegattaService));
 
-        NotSelectedClubs = await _clubService.GetAllClubs();
+        Clubs = await _clubService.GetAllClubs();
+        Waters = await _regattaService.GetAllWaters();
     }
 
     private async Task SaveRegatta()

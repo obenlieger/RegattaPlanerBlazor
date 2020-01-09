@@ -8,17 +8,80 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="Organizer">Organizer</label>
+        <label for="Organizer">Ausrichter</label>
         <div>
             <InputText class="form-control" @bind-Value="@Regatta.Organizer" />
             <ValidationMessage For="@(() => Regatta.Organizer)" />
         </div>
     </div>
     <div class="form-group">
-        <label for="Organizer">Verein</label>
+        <label for="Organizer">Ausrichtender Verein</label>
         <div>
-            <InputText class="form-control" @bind-Value="@Regatta.Organizer" />
-            <ValidationMessage For="@(() => Regatta.Organizer)" />
+            <InputSelect class="form-control" @bind-Value="@Regatta.ClubId">
+                @foreach (var club in Clubs)
+                {
+                    <option value="@club.ClubId">@club.Name</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Kategorie</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Category" />
+            <ValidationMessage For="@(() => Regatta.Category)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Von</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@Regatta.FromDate" />
+            <ValidationMessage For="@(() => Regatta.FromDate)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Bis</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@Regatta.ToDate" />
+            <ValidationMessage For="@(() => Regatta.ToDate)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Gewässer</label>
+        <div>
+            <InputSelect class="form-control" @bind-Value="@Regatta.WaterId">
+                @foreach (var water in Waters)
+                {
+                    <option value="@water.WaterId">@water.Name.</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Wassertiefe</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Regatta.Waterdepth" />
+            <ValidationMessage For="@(() => Regatta.Waterdepth)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Startbahnen</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Regatta.Startslots" />
+            <ValidationMessage For="@(() => Regatta.Startslots)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Anzahl Starter Vorjahr</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Regatta.StartersLastYear" />
+            <ValidationMessage For="@(() => Regatta.StartersLastYear)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Altersklassen:</label>
+        <div>
+            <MultipleSelector Selected="MSMOldclassSelected" NoSelected="MSMOldclassNotSelected"></MultipleSelector>
         </div>
     </div>
 
@@ -27,5 +90,25 @@
 
 @code {
     [Parameter] public Regatta Regatta { get; set; }
-    [Parameter] public EventCallback OnValidSubmit { get; set; }    
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public List<Club> Clubs { get; set; }
+    [Parameter] public List<Water> Waters { get; set; }
+    [Parameter] public List<Oldclass> SelectedOldclasses { get; set; }
+    [Parameter] public List<Oldclass> NotSelectedOldclasses { get; set; }
+
+    private List<MultipleSelectorModel> MSMOldclassSelected = new List<MultipleSelectorModel>();
+    private List<MultipleSelectorModel> MSMOldclassNotSelected = new List<MultipleSelectorModel>();
+
+    protected override void OnInitialized()
+    {
+        MSMOldclassSelected = SelectedOldclasses.Select(x => new MultipleSelectorModel(x.OldclassId.ToString(), x.Name)).ToList();
+        MSMOldclassNotSelected = NotSelectedOldclasses.Select(x => new MultipleSelectorModel(x.OldclassId.ToString(), x.Name)).ToList();
+    }
+
+    private async Task OnDataAnnotationsValidated()
+    {
+        Regatta.RegattaOldclasses = MSMOldclassSelected.Select(x => new RegattaOldclass { OldclassId = int.Parse(x.Key) }).ToList();
+
+        await OnValidSubmit.InvokeAsync(null);
+    }
 }
