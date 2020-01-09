@@ -1,0 +1,38 @@
+﻿@page "/regatta/create"
+@inject NavigationManager navigationManager
+@inherits OwningComponentBase
+
+<h3>Create Regatta</h3>
+
+@if(NotSelectedClubs != null)
+{
+    <RegattaForm Regatta="Regatta" OnValidSubmit="SaveRegatta" NotSelectedClubs="NotSelectedClubs" />
+}
+
+@code {
+    private Regatta Regatta = new Regatta();
+    private List<Club> NotSelectedClubs;
+    ClubService _clubService;
+    RegattaService _regattaService;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _clubService = (ClubService)ScopedServices.GetService(typeof(ClubService));
+        _regattaService = (RegattaService)ScopedServices.GetService(typeof(RegattaService));
+
+        NotSelectedClubs = await _clubService.GetAllClubs();
+    }
+
+    private async Task SaveRegatta()
+    {
+        try
+        {
+            int regattaId = await _regattaService.CreateRegatta(Regatta);
+            navigationManager.NavigateTo("regattas");
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
