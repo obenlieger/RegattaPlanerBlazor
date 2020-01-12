@@ -52,7 +52,7 @@
             <InputSelect class="form-control" @bind-Value="@Regatta.WaterId">
                 @foreach (var water in Waters)
                 {
-                    <option value="@water.WaterId">@water.Name.</option>
+                    <option value="@water.WaterId">@water.Name</option>
                 }
             </InputSelect>
         </div>
@@ -82,6 +82,111 @@
         <label>Altersklassen:</label>
         <div>
             <MultipleSelector Selected="MSMOldclassSelected" NoSelected="MSMOldclassNotSelected"></MultipleSelector>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Kommentar</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.ReportText" />
+            <ValidationMessage For="@(() => Regatta.ReportText)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Meldeschluss</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@Regatta.ReportSchedule" />
+            <ValidationMessage For="@(() => Regatta.ReportSchedule)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Meldeeröffnung</label>
+        <div>
+            <InputDate class="form-control" @bind-Value="@Regatta.ReportOpening" />
+            <ValidationMessage For="@(() => Regatta.ReportOpening)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Meldeadresse</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.ReportAddress" />
+            <ValidationMessage For="@(() => Regatta.ReportAddress)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Telefon</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.ReportTel" />
+            <ValidationMessage For="@(() => Regatta.ReportTel)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">E-Mail</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.ReportMail" />
+            <ValidationMessage For="@(() => Regatta.ReportMail)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Fax</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.ReportFax" />
+            <ValidationMessage For="@(() => Regatta.ReportFax)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Kampfrichter</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Judge" />
+            <ValidationMessage For="@(() => Regatta.Judge)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Medaillen</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Awards" />
+            <ValidationMessage For="@(() => Regatta.Awards)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Sicherheit</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Security" />
+            <ValidationMessage For="@(() => Regatta.Security)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Meldetext</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.ScheduleText" />
+            <ValidationMessage For="@(() => Regatta.ScheduleText)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Teilnahmegebühr</label>
+        <div>
+            <InputNumber class="form-control" @bind-Value="@Regatta.SubscriberFee" />
+            <ValidationMessage For="@(() => Regatta.SubscriberFee)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Übernachtung</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Accomodation" />
+            <ValidationMessage For="@(() => Regatta.Accomodation)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Kommentar</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Comment" />
+            <ValidationMessage For="@(() => Regatta.Comment)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Organizer">Verpflegung</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Regatta.Catering" />
+            <ValidationMessage For="@(() => Regatta.Catering)" />
         </div>
     </div>
 

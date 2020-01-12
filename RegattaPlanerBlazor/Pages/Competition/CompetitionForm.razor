@@ -1,0 +1,38 @@
+﻿<EditForm Model="Competition">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label for="BoatclassId">Bootsklasse</label>
+        <div>
+            <InputSelect class="form-control" @bind-Value="@Competition.BoatclassId">
+                @foreach (var boatclass in Boatclasses)
+                {
+                    <option value="@boatclass.BoatclassId">@boatclass.Name</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="RaceclassId">Rennklasse</label>
+        <div>
+            <InputSelect class="form-control" @bind-Value="@Competition.RaceclassId">
+                @foreach (var raceclass in Raceclasses)
+                {
+                    <option value="@raceclass.RaceclassId">@raceclass.Name</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Speichern</button>
+</EditForm>
+
+@code {
+    [Parameter] public Competition Competition { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public List<Boatclass> Boatclasses { get; set; }
+    [Parameter] public List<Raceclass> Raceclasses { get; set; }
+
+    private async Task OnDataAnnotationsValidated()
+    {       
+        await OnValidSubmit.InvokeAsync(null);
+    }
+}

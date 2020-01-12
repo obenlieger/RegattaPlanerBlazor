@@ -1,0 +1,66 @@
+﻿@page "/competitions"
+@inherits OwningComponentBase<CompetitionService>
+
+<h3>Wettkämpfe</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <div class="form-group">
+            <a class="btn btn-info" href="competition/create">Neuer Wettkampf</a>
+        </div>
+
+        <GenericList List="Competitions">
+            <WholeListTemplate>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Bootsklasse</th>
+                            <th>Rennklasse</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Competitions)
+                        {
+                        <tr>
+                            <td>@item.Boatclasses.Name</td>
+                            <td>@item.Raceclasses.Name</td>                            
+                            <td>
+                                <a class="btn btn-success" href="/competition/edit/@item.CompetitionId">Bearbeiten</a>
+                                <button class="btn btn-danger" @onclick="@(() => DeleteCompetition(item.CompetitionId))">Löschen</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </WholeListTemplate>
+        </GenericList>
+    </Authorized>
+    <NotAuthorized>
+        Du bist nicht berechtigt
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    List<Competition> Competitions;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Competitions = await @Service.GetAllCompetitions();
+    }
+
+    private async Task LoadClubs()
+    {
+        Competitions = await @Service.GetAllCompetitions();
+    }
+
+    private async Task DeleteCompetition(int id)
+    {
+        bool result = false;
+
+        result = await @Service.DeleteCompetition(id);
+
+        await LoadClubs();
+    }
+}

@@ -1,0 +1,43 @@
+﻿@page "/competition/create"
+@inject NavigationManager navigationManager
+@inherits OwningComponentBase
+
+<h3>Wettkampf erstellen</h3>
+
+@if(Boatclasses != null || Raceclasses != null)
+{
+    <CompetitionForm Competition="Competition" Boatclasses="Boatclasses" Raceclasses="Raceclasses" OnValidSubmit="SaveRegatta" />
+}
+
+@code {
+    private Competition Competition = new Competition();
+    private List<Boatclass> Boatclasses;
+    private List<Raceclass> Raceclasses;
+
+    CompetitionService _competitionService;
+    BoatclassService _boatclassService;
+    RaceclassService _raceclassService;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _competitionService = (CompetitionService)ScopedServices.GetService(typeof(CompetitionService));
+        _boatclassService = (BoatclassService)ScopedServices.GetService(typeof(BoatclassService));
+        _raceclassService = (RaceclassService)ScopedServices.GetService(typeof(RaceclassService));
+
+        Boatclasses = await _boatclassService.GetAllBoatclasses();
+        Raceclasses = await _raceclassService.GetAllRaceclasses();
+    }
+
+    private async Task SaveRegatta()
+    {
+        try
+        {
+            int competitionId = await _competitionService.CreateCompetition(Competition);
+            navigationManager.NavigateTo("competitions");
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}

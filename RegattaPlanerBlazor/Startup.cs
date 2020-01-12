@@ -38,10 +38,12 @@ namespace RegattaPlanerBlazor
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();            
             services.AddScoped<ClubService>();
             services.AddScoped<RegattaService>();
+            services.AddScoped<CompetitionService>();
+            services.AddScoped<BoatclassService>();
+            services.AddScoped<RaceclassService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
