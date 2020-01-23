@@ -50,7 +50,7 @@
         Competitions = await @Service.GetAllCompetitions();
     }
 
-    private async Task LoadClubs()
+    private async Task LoadCompetitions()
     {
         Competitions = await @Service.GetAllCompetitions();
     }
@@ -61,6 +61,6 @@
 
         result = await @Service.DeleteCompetition(id);
 
-        await LoadClubs();
+        await LoadCompetitions();
     }
 }

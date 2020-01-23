@@ -1,0 +1,68 @@
+﻿@page "/oldclasses"
+@inherits OwningComponentBase<OldclassService>
+
+<h3>Altersklassen</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <div class="form-group">
+            <a class="btn btn-info" href="oldclass/create">Neue Altersklasse</a>
+        </div>
+
+        <GenericList List="Oldclasses">
+            <WholeListTemplate>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Von</th>
+                            <th>Bis</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Oldclasses)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.FromAge</td>
+                                <td>@item.ToAge</td>
+                                <td>
+                                    <a class="btn btn-success" href="/competition/edit/@item.OldclassId">Bearbeiten</a>
+                                    <button class="btn btn-danger" @onclick="@(() => DeleteOldclass(item.OldclassId))">Löschen</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </WholeListTemplate>
+        </GenericList>
+    </Authorized>
+    <NotAuthorized>
+        Du bist nicht berechtigt
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    List<Oldclass> Oldclasses;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Oldclasses = await @Service.GetAllOldclasses();
+    }
+
+    private async Task LoadOldclasses()
+    {
+        Oldclasses = await @Service.GetAllOldclasses();
+    }
+
+    private async Task DeleteOldclass(int id)
+    {
+        bool result = false;
+
+        result = await @Service.DeleteOldclasses(id);
+
+        await LoadOldclasses();
+    }
+}

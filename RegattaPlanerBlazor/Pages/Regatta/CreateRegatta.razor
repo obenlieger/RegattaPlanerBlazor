@@ -6,23 +6,28 @@
 
 @if(Clubs != null)
 {
-    <RegattaForm Regatta="Regatta" OnValidSubmit="SaveRegatta" Clubs="Clubs" Waters="Waters" />
+    <RegattaForm Regatta="Regatta" OnValidSubmit="SaveRegatta" Clubs="Clubs" Waters="Waters" NotSelectedOldclasses="NotSelectedOldclasses" />
 }
 
 @code {
     private Regatta Regatta = new Regatta();
     private List<Club> Clubs;
     private List<Water> Waters;
+    private List<Oldclass> NotSelectedOldclasses;
+
     ClubService _clubService;
     RegattaService _regattaService;
+    OldclassService _oldclassService;
 
     protected async override Task OnInitializedAsync()
     {
         _clubService = (ClubService)ScopedServices.GetService(typeof(ClubService));
         _regattaService = (RegattaService)ScopedServices.GetService(typeof(RegattaService));
+        _oldclassService = (OldclassService)ScopedServices.GetService(typeof(OldclassService));
 
         Clubs = await _clubService.GetAllClubs();
         Waters = await _regattaService.GetAllWaters();
+        NotSelectedOldclasses = await _oldclassService.GetAllOldclasses();
     }
 
     private async Task SaveRegatta()

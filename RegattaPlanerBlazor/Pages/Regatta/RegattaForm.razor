@@ -198,8 +198,8 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public List<Club> Clubs { get; set; }
     [Parameter] public List<Water> Waters { get; set; }
-    [Parameter] public List<Oldclass> SelectedOldclasses { get; set; }
-    [Parameter] public List<Oldclass> NotSelectedOldclasses { get; set; }
+    [Parameter] public List<Oldclass> SelectedOldclasses { get; set; } = new List<Oldclass>();
+    [Parameter] public List<Oldclass> NotSelectedOldclasses { get; set; } = new List<Oldclass>();
 
     private List<MultipleSelectorModel> MSMOldclassSelected = new List<MultipleSelectorModel>();
     private List<MultipleSelectorModel> MSMOldclassNotSelected = new List<MultipleSelectorModel>();

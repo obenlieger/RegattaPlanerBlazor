@@ -44,6 +44,7 @@ namespace RegattaPlanerBlazor
             services.AddScoped<CompetitionService>();
             services.AddScoped<BoatclassService>();
             services.AddScoped<RaceclassService>();
+            services.AddScoped<OldclassService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
