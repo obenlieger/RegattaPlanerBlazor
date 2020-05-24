@@ -42,5 +42,26 @@ namespace RegattaPlanerBlazor.Data
             await _context.SaveChangesAsync();
             return competition.CompetitionId;
         }
+
+        public async Task<bool> CreateAll()
+        {            
+            var comp = _context.Competitions;
+            var bclist = _context.Boatclasses.ToList();
+            var rclist = _context.Raceclasses.ToList();
+
+            foreach (var bc in bclist)
+            {
+                foreach (var rc in rclist)
+                {
+                    if (comp.Where(e => e.BoatclassId == bc.BoatclassId && e.RaceclassId == rc.RaceclassId).Count() == 0)
+                    {
+                        _context.Competitions.Add(new Competition { BoatclassId = bc.BoatclassId, RaceclassId = rc.RaceclassId });
+                    }
+                }
+            }
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

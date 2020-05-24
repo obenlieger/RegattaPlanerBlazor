@@ -1,0 +1,22 @@
+@page "/competition/createAll"
+@inject NavigationManager navigationManager
+@inherits OwningComponentBase
+
+<h3>Alle Wettkämpfe werden erstellt</h3>
+
+@code {
+    CompetitionService _competitionService;
+    protected override async Task OnInitializedAsync()
+    {
+        _competitionService = (CompetitionService)ScopedServices.GetService(typeof(CompetitionService));
+
+        try 
+        {
+            bool result = await _competitionService.CreateAll();
+        }   
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }     
+    }
+}

@@ -6,7 +6,7 @@
 
 @if(Boatclasses != null || Raceclasses != null)
 {
-    <CompetitionForm Competition="Competition" Boatclasses="Boatclasses" Raceclasses="Raceclasses" OnValidSubmit="SaveRegatta" />
+    <CompetitionForm Competition="Competition" Boatclasses="Boatclasses" Raceclasses="Raceclasses" OnValidSubmit="SaveCompetition" />
 }
 
 @code {
@@ -28,7 +28,7 @@
         Raceclasses = await _raceclassService.GetAllRaceclasses();
     }
 
-    private async Task SaveRegatta()
+    private async Task SaveCompetition()
     {
         try
         {

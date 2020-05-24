@@ -18,7 +18,7 @@ namespace RegattaPlanerBlazor.Data
 
         public async Task<List<Club>> GetAllClubs()
         {
-            return await _context.Clubs.ToListAsync();
+            return await _context.Clubs.OrderBy(x => x.ShortName).ToListAsync();
         }
 
         public async Task<Club> GetClub(int id)

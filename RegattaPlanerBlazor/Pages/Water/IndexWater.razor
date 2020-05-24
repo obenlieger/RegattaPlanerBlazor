@@ -1,0 +1,51 @@
+@page "/water"
+@inherits OwningComponentBase<WaterService>
+
+<h3>Gew&auml;sser</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <div class="form-group">
+            <a class="btn btn-info" href="water/create">Neues Gew&auml;sser</a>
+        </div>
+
+        <GenericList List="Waters">
+            <WholeListTemplate>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Regattas)
+                        {
+                            <tr>
+                                <td>
+                                    <a class="btn btn-success" href="/water/edit/@item.Id">Bearbeiten</a>
+                                    <button class="btn btn-danger" @onclick="@(() => DeleteWater(item.WaterId))">Löschen</button>
+                                </td>
+                                <td>@item.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </WholeListTemplate>
+        </GenericList>
+    </Authorized>
+    <NotAuthorized>
+        Du bist nicht berechtigt.
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    List<Water> Waters;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Waters = await @Service.GetAllWaters();
+    }
+
+    
+}
